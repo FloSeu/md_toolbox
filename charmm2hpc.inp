@@ -1,0 +1,36 @@
+#INPUT FILE for charmm2hpc.py -> enter all parameters here
+#Version 0.1 11/2019
+
+simname		= 		_ub
+duration	= 		500									#put your simduration in nanoseconds(1ns = 500.000 steps)
+preset		= 		hildi								#put taurus for TAURUS(Dresden Bull cluster), put hildi for Leipzig cluster, umbrella for umbrella, anything else is unbiased normal sim
+xtcsteps	= 		2500								#put interval of steps to be written to XTC-file
+replicas	= 		3									#put number of replicas you want to generate, generates separate *.sh files for each run
+
+#Input for PULL-Runs
+biased		= 		Y									#put yes or no, no skips the umbrella inclusion
+pullgrp1	= 		brot 847 884 1111									#leave empty if no umbrella
+pullgrp2	= 		wurst 12 33 59 									#leave empty if no umbrella
+pullrate	= 		0.001
+pullforce	= 		1000
+compressed	= 		Y									#put Y or N, umbrella output will then only be written to *.xtc file
+
+#Input for BULLCLUSTER
+username	= 		flse848b									
+simtime		= 		96:00:00							#put hh;mm;ss, keep as low as necessary (taurus max 7 days)
+mail		=		f.seufert@studserv.uni-leipzig.de
+mailtype	= 		all									#all, error etc.
+workdir		= 		/scratch/p_membranproteine/flo/gain			
+node_number =		20									#20 should be sufficient for most systems <300k atoms
+node_taskss =		16
+nodetype	=		sandy								#put sandy or haswell for taurus
+project		=		p_membranproteine
+
+#Input for HILDI
+username	=		fseufert									
+interval/len=		12:00:00							#interval for staggered simulation
+gpu			=		1									#leave at 1 ideally for GROMACS
+tasks-p-node=		9                                   
+cpus-p-task	=		2									#no. of cores per task
+nice		=		0									#for running lower priority
+mail-type	=		FAIL
