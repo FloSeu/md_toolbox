@@ -1,24 +1,24 @@
 #INPUT FILE for charmm2hpc.py -> enter all parameters here
-#Version 0.1 11/2019
+#Version 0.5 04/2020
 
-simname		= 		_ub
-duration	= 		500									#put your simduration in nanoseconds(1ns = 500.000 steps)
-preset		= 		hildi								#put taurus for TAURUS(Dresden Bull cluster), put hildi for Leipzig cluster, umbrella for umbrella, anything else is unbiased normal sim
-xtcsteps	= 		2500								#put interval of steps to be written to XTC-file
-replicas	= 		3									#put number of replicas you want to generate, generates separate *.sh files for each run
+simname		= 		sim_name
+duration	= 		1500								#put your simduration in nanoseconds(1 ns = 500,000 steps if dt = 0.002)
+preset		= 		hildi								#put "taurus" for TAURUS(Dresden Bull cluster), put "hildi" for Leipzig cluster, "umbrell"a for umbrella, anything else is unbiased normal sim
+xtcsteps	= 		5000								#put interval of steps to be written to XTC-file
+replicas	= 		6									#put number of replicas you want to generate, generates separate *.sh files for each run
 
 #Input for PULL-Runs
-biased		= 		Y									#put yes or no, no skips the umbrella inclusion
-pullgrp1	= 		brot 847 884 1111									#leave empty if no umbrella
-pullgrp2	= 		wurst 12 33 59 									#leave empty if no umbrella
+biased		= 		N									#put yes or no, no skips the umbrella inclusion
+pullgrp1	=		sta_cterm 5811 5825 5839 5859		#leave empty if no umbrella, syntax: "grp_name atom# atom# atom# atom# ..." (best to put in ascending order)
+pullgrp2	=		prot_cterm 5069 4782 4817 2860	 	#leave empty if no umbrella
 pullrate	= 		0.001
-pullforce	= 		1000
+pullforce	= 		500
 compressed	= 		Y									#put Y or N, umbrella output will then only be written to *.xtc file
 
 #Input for BULLCLUSTER
-username	= 		flse848b									
-simtime		= 		96:00:00							#put hh;mm;ss, keep as low as necessary (taurus max 7 days)
-mail		=		f.seufert@studserv.uni-leipzig.de
+username	= 		taurus_user									
+simtime		= 		96:00:00							#put hh;mm;ss, keep as low as necessary (taurus max 7 days runtime)
+mail		=		yourmail@example.com
 mailtype	= 		all									#all, error etc.
 workdir		= 		/scratch/p_membranproteine/flo/gain			
 node_number =		20									#20 should be sufficient for most systems <300k atoms
@@ -29,8 +29,9 @@ project		=		p_membranproteine
 #Input for HILDI
 username	=		fseufert									
 interval/len=		12:00:00							#interval for staggered simulation
-gpu			=		1									#leave at 1 ideally for GROMACS
+gpu			=		1									#leave at 1 for GROMACS
 tasks-p-node=		9                                   
 cpus-p-task	=		2									#no. of cores per task
-nice		=		0									#for running lower priority
+nice		=		0									# put >0 for running lower priority, be nice! :)
 mail-type	=		FAIL
+mail		=		yourmail@example.com
